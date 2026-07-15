@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Centro Avancado Dreams | Clinica de Estetica Avancada</title>
+    <meta name="description" content="Centro Avancado Dreams: procedimentos faciais, corporais, laser, pos-operatorio, bem-estar e protocolos personalizados.">
+    <style>
+      :root {
+        --ink: #172026;
+        --muted: #6b6a65;
+        --paper: #f4f3ee;
+        --white: #fffdfa;
+        --taupe: #b7a58e;
+        --taupe-dark: #7f705f;
+        --line: rgba(23, 32, 38, .15);
+        --shadow: 0 22px 60px rgba(23, 32, 38, .16);
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--paper);
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.55;
+      }
+      img { display: block; max-width: 100%; }
+      a { color: inherit; text-decoration: none; }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 16px clamp(18px, 4vw, 56px);
+        background: rgba(244, 243, 238, .92);
+        border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(14px);
+      }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 0;
+      }
+      .brand-logo {
+        width: clamp(178px, 20vw, 250px);
+        height: auto;
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .nav a:hover { color: var(--ink); }
+      .nav .cta {
+        min-height: 42px;
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        background: var(--ink);
+        color: var(--white);
+        padding: 10px 18px;
+        font-weight: 700;
+      }
+      .menu {
+        display: none;
+        width: 44px;
+        height: 44px;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        background: transparent;
+      }
+      .menu span {
+        display: block;
+        width: 18px;
+        height: 1px;
+        margin: 5px auto;
+        background: var(--ink);
+      }
+
+      .hero {
+        min-height: calc(100vh - 77px);
+        display: grid;
+        grid-template-columns: minmax(0, .9fr) minmax(360px, .7fr);
+        align-items: stretch;
+        border-bottom: 1px solid var(--line);
+      }
+      .hero-copy {
+        display: grid;
+        align-content: center;
+        padding: clamp(54px, 8vw, 110px) clamp(20px, 6vw, 86px);
+      }
+      .kicker {
+        margin: 0 0 14px;
+        color: var(--taupe-dark);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+      }
+      h1,
+      h2 {
+        margin: 0 0 20px;
+        font-family: Georgia, "Times New Roman", serif;
+        font-weight: 500;
+        line-height: 1.02;
+      }
+      h1 { font-size: clamp(48px, 8vw, 96px); max-width: 820px; }
+      h2 { font-size: clamp(34px, 5vw, 60px); }
+      h3 { margin: 0 0 10px; font-size: 20px; }
+      p { margin-top: 0; }
+      .hero-copy p {
+        max-width: 620px;
+        color: var(--muted);
+        font-size: 18px;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 22px;
+      }
+      .button {
+        min-height: 48px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--ink);
+        border-radius: 999px;
+        padding: 13px 22px;
+        font-weight: 700;
+      }
+      .button.primary {
+        background: var(--ink);
+        color: var(--white);
+      }
+      .hero-media {
+        position: relative;
+        min-height: 560px;
+        overflow: hidden;
+      }
+      .hero-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .hero-card {
+        position: absolute;
+        left: 26px;
+        right: 26px;
+        bottom: 26px;
+        padding: 20px;
+        background: rgba(255, 253, 250, .92);
+        border: 1px solid rgba(255,255,255,.55);
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+      }
+      .hero-card strong {
+        display: block;
+        font-family: Georgia, serif;
+        font-size: 24px;
+        font-weight: 500;
+      }
+      .hero-card span { color: var(--muted); }
+
+      .section {
+        padding: clamp(64px, 9vw, 120px) clamp(18px, 5vw, 72px);
+      }
+      .section-head {
+        max-width: 780px;
+        margin-bottom: 34px;
+      }
+      .split {
+        display: grid;
+        grid-template-columns: minmax(0, .8fr) minmax(0, 1fr);
+        gap: clamp(32px, 7vw, 96px);
+        align-items: start;
+      }
+      .lead { color: var(--muted); font-size: 18px; }
+      .cards,
+      .process,
+      .gallery {
+        display: grid;
+        gap: 16px;
+      }
+      .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .card {
+        min-height: 210px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--white);
+        padding: 24px;
+      }
+      .card .tag {
+        display: inline-flex;
+        margin-bottom: 26px;
+        border-radius: 999px;
+        background: rgba(183, 165, 142, .16);
+        color: var(--taupe-dark);
+        padding: 6px 11px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .card p,
+      .process p,
+      .contact p { color: var(--muted); }
+
+      .services {
+        background: var(--white);
+        border-block: 1px solid var(--line);
+      }
+      .service-list {
+        columns: 2;
+        column-gap: 44px;
+        margin: 0;
+        padding-left: 18px;
+        color: var(--ink);
+      }
+      .service-list li {
+        break-inside: avoid;
+        margin: 0 0 10px;
+      }
+      .added {
+        margin-top: 26px;
+        border-left: 3px solid var(--taupe);
+        padding-left: 18px;
+        color: var(--muted);
+      }
+
+      .process {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+      .step {
+        border-top: 1px solid var(--line);
+        padding-top: 18px;
+      }
+      .step span {
+        color: var(--taupe-dark);
+        font-weight: 700;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      .gallery img {
+        width: 100%;
+        height: 360px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+
+      .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+      .quick-card {
+        display: grid;
+        align-content: space-between;
+        min-height: 250px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--white);
+        padding: 28px;
+        box-shadow: 0 1px 0 rgba(23, 32, 38, .04);
+      }
+      .quick-card p {
+        color: var(--muted);
+      }
+      .quick-card .button {
+        width: fit-content;
+        margin-top: 18px;
+      }
+
+      .contact {
+        display: grid;
+        grid-template-columns: minmax(0, .9fr) minmax(320px, .75fr);
+        gap: clamp(30px, 6vw, 82px);
+        background: var(--ink);
+        color: var(--white);
+      }
+      .contact .kicker,
+      .contact p { color: #d7cab8; }
+      .contact-box {
+        display: grid;
+        gap: 12px;
+        align-content: start;
+        border: 1px solid rgba(255,255,255,.18);
+        border-radius: 8px;
+        padding: 26px;
+      }
+      .contact-box a,
+      .contact-box span {
+        display: block;
+        border-bottom: 1px solid rgba(255,255,255,.14);
+        padding-bottom: 12px;
+      }
+      .calendar-card {
+        display: grid;
+        gap: 14px;
+        border: 1px solid rgba(255,255,255,.18);
+        border-radius: 8px;
+        background: rgba(255,255,255,.06);
+        padding: 18px;
+      }
+      .calendar-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .calendar-head strong {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 22px;
+        font-weight: 500;
+      }
+      .calendar-nav {
+        display: inline-flex;
+        gap: 8px;
+      }
+      .calendar-nav button,
+      .calendar-day {
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(255,255,255,.18);
+        background: rgba(255,255,255,.08);
+        color: var(--white);
+        cursor: pointer;
+      }
+      .calendar-nav button {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        font-weight: 800;
+      }
+      .calendar-week,
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        gap: 6px;
+      }
+      .calendar-week span {
+        color: #d7cab8;
+        font-size: 12px;
+        font-weight: 800;
+        text-align: center;
+      }
+      .calendar-day {
+        aspect-ratio: 1;
+        border-radius: 8px;
+        font-weight: 800;
+      }
+      .calendar-day:hover:not(:disabled),
+      .calendar-day.selected {
+        border-color: var(--taupe);
+        background: var(--taupe);
+        color: var(--ink);
+      }
+      .calendar-day:disabled {
+        color: rgba(255,255,255,.28);
+        cursor: not-allowed;
+        background: rgba(255,255,255,.03);
+      }
+      .schedule-fields {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .schedule-fields label {
+        display: grid;
+        gap: 7px;
+        color: #d7cab8;
+        font-size: 13px;
+        font-weight: 800;
+      }
+      .schedule-fields input,
+      .schedule-fields select {
+        width: 100%;
+        min-height: 42px;
+        border: 1px solid rgba(255,255,255,.18);
+        border-radius: 8px;
+        background: rgba(255,255,255,.09);
+        color: var(--white);
+        padding: 10px 11px;
+      }
+      .schedule-fields select option {
+        color: var(--ink);
+      }
+      .selected-date {
+        min-height: 24px;
+        margin: 0;
+        color: #d7cab8;
+        font-weight: 800;
+      }
+      .footer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 28px clamp(18px, 5vw, 72px);
+        background: #101619;
+        color: #e8e1d7;
+      }
+      .footer p { margin: 0; }
+
+      @media (max-width: 980px) {
+        .menu { display: inline-block; }
+        .nav {
+          position: fixed;
+          top: 77px;
+          right: 16px;
+          display: none;
+          width: min(310px, calc(100vw - 32px));
+          align-items: stretch;
+          flex-direction: column;
+          gap: 0;
+          padding: 12px;
+          background: var(--white);
+          border: 1px solid var(--line);
+          border-radius: 8px;
+          box-shadow: var(--shadow);
+        }
+        .nav.open { display: flex; }
+        .nav a { padding: 12px; }
+        .hero,
+        .split,
+        .contact { grid-template-columns: 1fr; }
+        .hero { min-height: auto; }
+        .cards,
+        .process { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+      @media (max-width: 640px) {
+        .topbar { padding: 12px 16px; }
+        .brand-logo { width: 168px; }
+        .hero-copy { padding: 54px 18px; }
+        .hero-media { min-height: 430px; }
+        .actions,
+        .button { width: 100%; }
+        .cards,
+        .process,
+        .gallery,
+        .quick-actions { grid-template-columns: 1fr; }
+        .schedule-fields { grid-template-columns: 1fr; }
+        .service-list { columns: 1; }
+        .gallery img { height: 300px; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#inicio" aria-label="Centro Avancado Dreams">
+        <img class="brand-logo" src="assets/logo-dreams.svg" alt="Centro Avancado Dreams">
+      </a>
+      <button class="menu" type="button" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+      <nav class="nav" aria-label="Navegacao principal">
+        <a href="#servicos">Procedimentos</a>
+        <a href="#agendamento">Agendamento</a>
+        <a href="#metodo">Metodo</a>
+        <a href="#clinica">Clinica</a>
+        <a href="ficha-anamnese.html" class="cta">Ficha de anamnese</a>
+      </nav>
+    </header>
+
+    <main id="inicio">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="kicker">Estetica avancada e bem-estar</p>
+          <h1>Centro de Estetica Avancada Dreams</h1>
+          <p>Realce sua beleza com protocolos personalizados, profissionais habilitados e atendimento pensado para entregar conforto, seguranca e resultados naturais.</p>
+          <div class="actions">
+            <a class="button primary" href="#contato">Agendar avaliacao</a>
+            <a class="button" href="ficha-anamnese.html">Preencher anamnese</a>
+            <a class="button" href="#servicos">Conhecer procedimentos</a>
+          </div>
+        </div>
+        <div class="hero-media">
+          <img src="index_arquivos/image001.png" alt="Identidade visual do Centro de Estetica Avancada Dreams">
+          <div class="hero-card">
+            <strong>Beleza em sua melhor versao</strong>
+            <span>Protocolos faciais, corporais e tecnologias esteticas para cada objetivo.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section split">
+        <div>
+          <p class="kicker">Cuidado personalizado</p>
+          <h2>Um plano para a sua pele, seu corpo e sua rotina.</h2>
+        </div>
+        <p class="lead">A Dreams combina avaliacao, tecnicas atuais e acompanhamento para construir uma experiencia completa: do primeiro contato ao pos-procedimento, com orientacao clara e evolucao monitorada.</p>
+      </section>
+
+      <section class="section services" id="servicos">
+        <div class="section-head">
+          <p class="kicker">Procedimentos</p>
+          <h2>Opcoes faciais existentes e novos servicos para ampliar o atendimento.</h2>
+          <p class="lead">A lista abaixo preserva as opcoes do material original e acrescenta areas que deixam o site mais completo para divulgacao profissional.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <span class="tag">Faciais avancados</span>
+            <h3>Tratamentos de pele</h3>
+            <p>Limpeza profunda, revitalizacao, microagulhamento, peelings, melasma, acne, skinbooster e clareamento de manchas.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Injetaveis</span>
+            <h3>Harmonizacao e rejuvenescimento</h3>
+            <p>Toxina botulinica, preenchimento facial, bioestimuladores, lipo de papada enzimatica e fios de PDO, conforme avaliacao.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Novas opcoes</span>
+            <h3>Corpo, laser e bem-estar</h3>
+            <p>Drenagem, massagem modeladora, pos-operatorio, depilacao a laser, protocolos corporais e pacotes de acompanhamento.</p>
+          </article>
+        </div>
+        <div class="added">
+          <strong>Novas secoes acrescentadas:</strong> procedimentos corporais, laser, pacotes personalizados, agendamento de consulta, ficha de anamnese, orientacoes pos-procedimento, galeria da clinica e contato rapido.
+        </div>
+      </section>
+
+      <section class="section split">
+        <div>
+          <p class="kicker">Menu completo</p>
+          <h2>Procedimentos disponiveis</h2>
+        </div>
+        <ul class="service-list">
+          <li>Limpeza de pele profunda</li>
+          <li>Revitalizacao facial</li>
+          <li>Peeling de diamante</li>
+          <li>Microagulhamento</li>
+          <li>Lipo de papada enzimatica</li>
+          <li>Radiofrequencia facial</li>
+          <li>Bioestimuladores</li>
+          <li>Jato de plasma</li>
+          <li>Skinbooster</li>
+          <li>BB Glow</li>
+          <li>Hidra Gloss Lips</li>
+          <li>Rejuvenescimento facial</li>
+          <li>Tratamento de melasma</li>
+          <li>Peelings</li>
+          <li>Tratamentos de acne</li>
+          <li>Toxina botulinica</li>
+          <li>Preenchimento facial</li>
+          <li>Clareamento de manchas</li>
+          <li>Drenagem pos-operatoria</li>
+          <li>Drenagem linfatica</li>
+          <li>Massagem modeladora</li>
+          <li>Protocolos para gordura localizada</li>
+          <li>Depilacao a laser</li>
+          <li>Avaliacao estetica online</li>
+          <li>Agendamento de consulta</li>
+          <li>Ficha de anamnese digital</li>
+        </ul>
+      </section>
+
+      <section class="section" id="agendamento">
+        <div class="section-head">
+          <p class="kicker">Consulta e anamnese</p>
+          <h2>Comece pelo agendamento ou preencha sua ficha antes da avaliacao.</h2>
+          <p class="lead">Essas duas opcoes deixam o atendimento mais rapido, organizado e profissional para a equipe e para a cliente.</p>
+        </div>
+        <div class="quick-actions">
+          <article class="quick-card">
+            <div>
+              <span class="tag">Consulta</span>
+              <h3>Agendamento de consulta</h3>
+              <p>Direcione a cliente para marcar avaliacao, escolher o melhor horario e iniciar o atendimento com a equipe Dreams.</p>
+            </div>
+            <a class="button primary" href="#contato">Agendar consulta</a>
+          </article>
+          <article class="quick-card">
+            <div>
+              <span class="tag">Formulario</span>
+              <h3>Ficha de anamnese</h3>
+              <p>Formulario para registrar informacoes importantes antes do procedimento, ajudando na seguranca e personalizacao do protocolo.</p>
+            </div>
+            <a class="button" href="ficha-anamnese.html">Abrir ficha de anamnese</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="metodo">
+        <div class="section-head">
+          <p class="kicker">Metodo Dreams</p>
+          <h2>Atendimento do jeito certo: avaliacao, plano, execucao e acompanhamento.</h2>
+        </div>
+        <div class="process">
+          <article class="step"><span>01</span><h3>Avaliacao</h3><p>Entendimento do objetivo, historico, rotina e necessidades da pele ou do corpo.</p></article>
+          <article class="step"><span>02</span><h3>Protocolo</h3><p>Indicacao clara das tecnicas, frequencia, cuidados e expectativa realista de resultado.</p></article>
+          <article class="step"><span>03</span><h3>Procedimento</h3><p>Execucao em ambiente preparado, com conforto, higiene e orientacao durante todo o atendimento.</p></article>
+          <article class="step"><span>04</span><h3>Retorno</h3><p>Acompanhamento de evolucao e ajustes para manter seguranca e qualidade no resultado.</p></article>
+        </div>
+      </section>
+
+      <section class="section services" id="clinica">
+        <div class="section-head">
+          <p class="kicker">Sobre a clinica</p>
+          <h2>Estrutura moderna em uma localizacao privilegiada.</h2>
+          <p class="lead">A Dreams valoriza acolhimento, tecnologia e um atendimento elegante, com foco em procedimentos esteticos seguros e resultados naturais.</p>
+        </div>
+        <div class="gallery">
+          <img src="index_arquivos/image003.png" alt="Tratamentos faciais avancados">
+          <img src="index_arquivos/image005.png" alt="Lista de procedimentos faciais">
+          <img src="index_arquivos/image007.png" alt="Sobre a clinica e localizacao">
+        </div>
+      </section>
+
+      <section class="section contact" id="contato">
+        <div>
+          <p class="kicker">Agendamento</p>
+          <h2>Pronta para sua melhor versao?</h2>
+          <p>Escolha um dia no calendario e envie sua solicitacao pelo WhatsApp para a equipe confirmar o melhor horario disponivel.</p>
+          <div class="actions">
+            <a class="button primary" id="scheduleWhatsapp" href="https://wa.me/5521972179361">Solicitar pelo WhatsApp</a>
+            <a class="button" href="tel:+5521972179361">Ligar agora</a>
+          </div>
+        </div>
+        <div class="calendar-card" aria-label="Calendario de agendamento">
+          <div class="calendar-head">
+            <strong id="calendarMonth">Mes</strong>
+            <div class="calendar-nav">
+              <button type="button" id="prevMonth" aria-label="Mes anterior">&lt;</button>
+              <button type="button" id="nextMonth" aria-label="Proximo mes">&gt;</button>
+            </div>
+          </div>
+          <div class="calendar-week" aria-hidden="true">
+            <span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sab</span>
+          </div>
+          <div class="calendar-grid" id="calendarGrid"></div>
+          <div class="schedule-fields">
+            <label>Nome<input id="scheduleName" type="text" placeholder="Seu nome"></label>
+            <label>Periodo<select id="schedulePeriod"><option>Manha</option><option>Tarde</option><option>Noite</option></select></label>
+          </div>
+          <p class="selected-date" id="selectedDateText">Selecione um dia no calendario.</p>
+          <a href="https://wa.me/5521972179361">WhatsApp: (21) 97217-9361</a>
+          <a href="tel:+5521972179361">Telefone: (21) 97217-9361</a>
+          <a href="https://instagram.com/">Instagram: inserir perfil</a>
+          <span>Horario: segunda a sabado, mediante agendamento</span>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Centro Avancado Dreams</p>
+      <p>Estetica avancada, beleza e bem-estar.</p>
+    </footer>
+
+    <script>
+      const menu = document.querySelector(".menu");
+      const nav = document.querySelector(".nav");
+      menu.addEventListener("click", () => {
+        const open = nav.classList.toggle("open");
+        menu.setAttribute("aria-expanded", String(open));
+      });
+      nav.addEventListener("click", (event) => {
+        if (event.target.matches("a")) {
+          nav.classList.remove("open");
+          menu.setAttribute("aria-expanded", "false");
+        }
+      });
+
+      const calendarGrid = document.querySelector("#calendarGrid");
+      const calendarMonth = document.querySelector("#calendarMonth");
+      const selectedDateText = document.querySelector("#selectedDateText");
+      const scheduleWhatsapp = document.querySelector("#scheduleWhatsapp");
+      const scheduleName = document.querySelector("#scheduleName");
+      const schedulePeriod = document.querySelector("#schedulePeriod");
+      const whatsappNumber = "5521972179361";
+      let calendarCursor = new Date();
+      let selectedDate = null;
+
+      function formatDate(date) {
+        return date.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric" });
+      }
+
+      function updateWhatsappLink() {
+        const name = scheduleName.value.trim() || "Cliente";
+        const period = schedulePeriod.value;
+        const dateText = selectedDate ? formatDate(selectedDate) : "data a escolher";
+        const message = `Ola, sou ${name}. Gostaria de agendar uma consulta para ${dateText}, no periodo da ${period}.`;
+        scheduleWhatsapp.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+      }
+
+      function renderCalendar() {
+        const year = calendarCursor.getFullYear();
+        const month = calendarCursor.getMonth();
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0);
+        calendarMonth.textContent = firstDay.toLocaleDateString("pt-BR", { month: "long", year: "numeric" });
+        calendarGrid.innerHTML = "";
+
+        for (let blank = 0; blank < firstDay.getDay(); blank += 1) {
+          const spacer = document.createElement("button");
+          spacer.type = "button";
+          spacer.className = "calendar-day";
+          spacer.disabled = true;
+          spacer.textContent = "";
+          calendarGrid.appendChild(spacer);
+        }
+
+        for (let day = 1; day <= lastDay.getDate(); day += 1) {
+          const date = new Date(year, month, day);
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "calendar-day";
+          button.textContent = String(day);
+          button.disabled = date < today || date.getDay() === 0;
+
+          if (selectedDate && date.toDateString() === selectedDate.toDateString()) {
+            button.classList.add("selected");
+          }
+
+          button.addEventListener("click", () => {
+            selectedDate = date;
+            selectedDateText.textContent = `Dia selecionado: ${formatDate(date)}`;
+            renderCalendar();
+            updateWhatsappLink();
+          });
+
+          calendarGrid.appendChild(button);
+        }
+      }
+
+      document.querySelector("#prevMonth").addEventListener("click", () => {
+        calendarCursor = new Date(calendarCursor.getFullYear(), calendarCursor.getMonth() - 1, 1);
+        renderCalendar();
+      });
+      document.querySelector("#nextMonth").addEventListener("click", () => {
+        calendarCursor = new Date(calendarCursor.getFullYear(), calendarCursor.getMonth() + 1, 1);
+        renderCalendar();
+      });
+      scheduleName.addEventListener("input", updateWhatsappLink);
+      schedulePeriod.addEventListener("change", updateWhatsappLink);
+      renderCalendar();
+      updateWhatsappLink();
+    </script>
+  </body>
+</html>

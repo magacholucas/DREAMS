@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ficha de Anamnese | Dreams Estetica</title>
+    <style>
+      :root {
+        --bg: #f7f3ee;
+        --card: #fffdf9;
+        --ink: #26211d;
+        --muted: #746a60;
+        --line: #ded3c8;
+        --brand: #8f4e3f;
+        --brand-dark: #633329;
+        --green: #2f706f;
+        --soft: #eee4da;
+        --danger: #9b2f2f;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        color: var(--ink);
+        background: var(--bg);
+      }
+      button, input, select, textarea { font: inherit; }
+
+      .hero {
+        min-height: 280px;
+        display: grid;
+        align-items: end;
+        padding: 28px;
+        color: #fff;
+        background:
+          linear-gradient(90deg, rgba(29, 21, 18, 0.84), rgba(29, 21, 18, 0.34)),
+          url("https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1800&q=80") center/cover;
+      }
+      .hero-inner { width: min(1120px, 100%); margin: 0 auto; }
+      .brand { display: inline-flex; align-items: center; gap: 12px; margin-bottom: 46px; }
+      .brand-mark {
+        display: grid;
+        width: 48px;
+        height: 48px;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--brand);
+        font-size: 24px;
+        font-weight: 800;
+      }
+      .brand strong, .brand small { display: block; }
+      .brand small { opacity: 0.84; }
+      h1 {
+        max-width: 720px;
+        margin: 0 0 10px;
+        font-size: clamp(34px, 5vw, 58px);
+        line-height: 1;
+        letter-spacing: 0;
+      }
+      .hero p { max-width: 720px; margin: 0; font-size: 18px; line-height: 1.45; }
+
+      .shell {
+        width: min(1120px, calc(100% - 28px));
+        margin: -34px auto 56px;
+        position: relative;
+      }
+      .toolbar, .panel {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--card);
+        box-shadow: 0 12px 30px rgba(48, 36, 28, 0.1);
+      }
+      .toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 16px;
+        padding: 16px;
+      }
+      .progress-wrap { min-width: min(340px, 100%); }
+      .progress-label {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 8px;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 700;
+      }
+      .progress { height: 10px; overflow: hidden; border-radius: 999px; background: var(--soft); }
+      .progress span {
+        display: block;
+        width: 0%;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--green);
+        transition: width 160ms ease;
+      }
+      .actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
+      .button {
+        min-height: 42px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 0 14px;
+        color: var(--ink);
+        background: #fff;
+        cursor: pointer;
+        font-weight: 800;
+      }
+      .button.primary { border-color: var(--brand); color: #fff; background: var(--brand); }
+      .button.primary:hover { background: var(--brand-dark); }
+      .button.danger { color: var(--danger); }
+
+      .form { display: grid; gap: 16px; }
+      .panel { padding: 22px; }
+      .panel h2 { margin: 0 0 5px; font-size: 24px; }
+      .panel > p { margin: 0 0 18px; color: var(--muted); line-height: 1.45; }
+      .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+      .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .full { grid-column: 1 / -1; }
+      label, .field-title {
+        display: grid;
+        gap: 7px;
+        color: var(--ink);
+        font-size: 14px;
+        font-weight: 800;
+      }
+      input, select, textarea {
+        width: 100%;
+        min-height: 43px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 10px 11px;
+        color: var(--ink);
+        background: #fff;
+      }
+      textarea { min-height: 92px; resize: vertical; }
+      input:focus, select:focus, textarea:focus {
+        outline: 3px solid rgba(47, 112, 111, 0.16);
+        border-color: var(--green);
+      }
+      .checks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .checks.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .check {
+        display: flex;
+        align-items: flex-start;
+        gap: 9px;
+        min-height: 42px;
+        padding: 10px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        font-weight: 700;
+      }
+      .check input { width: 18px; min-height: 18px; margin-top: 1px; accent-color: var(--brand); }
+      .choice-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+      .choice-card {
+        position: relative;
+        display: grid;
+        gap: 8px;
+        min-height: 150px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        padding: 18px;
+        cursor: pointer;
+      }
+      .choice-card input {
+        position: absolute;
+        inset: 16px 16px auto auto;
+        width: 20px;
+        min-height: 20px;
+        accent-color: var(--brand);
+      }
+      .choice-card strong {
+        display: block;
+        padding-right: 34px;
+        font-size: 21px;
+      }
+      .choice-card span {
+        color: var(--muted);
+        font-weight: 700;
+        line-height: 1.45;
+      }
+      .choice-card:has(input:checked) {
+        border-color: var(--brand);
+        box-shadow: 0 0 0 3px rgba(143, 78, 63, 0.12);
+      }
+      .conditional[hidden] {
+        display: none;
+      }
+      .notice {
+        padding: 14px;
+        border-left: 4px solid var(--green);
+        border-radius: 8px;
+        color: #1f3d3d;
+        background: #e7f1ef;
+        line-height: 1.45;
+      }
+      .signature {
+        display: grid;
+        grid-template-columns: 1fr 220px;
+        gap: 18px;
+        align-items: end;
+        margin-top: 18px;
+      }
+      .signature-line { min-height: 52px; border-bottom: 1px solid var(--ink); }
+      .status { min-height: 22px; margin: 12px 0 0; color: var(--green); font-weight: 800; }
+
+      @media (max-width: 760px) {
+        .hero { min-height: 250px; padding: 20px 14px; }
+        .brand { margin-bottom: 34px; }
+        .shell { width: min(100% - 20px, 1120px); }
+        .toolbar, .actions { align-items: stretch; flex-direction: column; }
+        .grid, .grid.three, .checks, .checks.three, .signature, .choice-grid { grid-template-columns: 1fr; }
+        .panel { padding: 17px; }
+      }
+      @media print {
+        body { background: #fff; }
+        .hero, .toolbar, .actions, .status { display: none; }
+        .shell { width: 100%; margin: 0; }
+        .panel { break-inside: avoid; box-shadow: none; margin-bottom: 12px; padding: 14px; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero-inner">
+        <div class="brand">
+          <div class="brand-mark">D</div>
+          <span><strong>Dreams</strong><small>Centro avancado de estetica</small></span>
+        </div>
+        <h1>Ficha de anamnese digital</h1>
+        <p>Avaliacao inicial para procedimentos esteticos, historico de saude, rotina, objetivos e consentimento.</p>
+      </div>
+    </header>
+
+    <main class="shell">
+      <section class="toolbar" aria-label="Acoes da ficha">
+        <div class="progress-wrap">
+          <div class="progress-label"><span>Campos obrigatorios</span><strong id="progressText">0%</strong></div>
+          <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+        </div>
+        <div class="actions">
+          <button class="button" type="button" id="saveButton">Salvar</button>
+          <button class="button" type="button" id="printButton">Imprimir / PDF</button>
+          <button class="button danger" type="button" id="clearButton">Limpar</button>
+        </div>
+      </section>
+
+      <form class="form" id="anamneseForm" action="https://formsubmit.co/atendimento@centroavancadodreams.com.br" method="POST">
+        <input type="hidden" name="_subject" id="emailSubject" value="Nova ficha de anamnese - Dreams" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="true" />
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+        <input type="hidden" name="Resumo da ficha" id="emailSummary" value="" />
+
+        <section class="panel">
+          <h2>Escolha o tipo de ficha</h2>
+          <p>Selecione a ficha adequada ao atendimento. O formulario exibira apenas as perguntas necessarias para o tipo escolhido.</p>
+          <div class="choice-grid">
+            <label class="choice-card">
+              <input name="tipo_ficha" value="Facial" type="radio" required />
+              <strong>Ficha facial</strong>
+              <span>Indicada para limpeza de pele, peeling, microagulhamento, manchas, acne, rejuvenescimento, toxina, preenchimento e protocolos faciais.</span>
+            </label>
+            <label class="choice-card">
+              <input name="tipo_ficha" value="Corporal" type="radio" required />
+              <strong>Ficha corporal</strong>
+              <span>Indicada para drenagem, massagem modeladora, gordura localizada, celulite, estrias, pos-operatorio, laser e protocolos corporais.</span>
+            </label>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Dados da cliente</h2>
+          <p>Informacoes basicas para identificacao, contato e cadastro.</p>
+          <div class="grid">
+            <label>Nome completo<input name="nome" type="text" required /></label>
+            <label>Data de nascimento<input name="nascimento" type="date" required /></label>
+            <label>CPF<input name="cpf" type="text" placeholder="000.000.000-00" /></label>
+            <label>Telefone / WhatsApp<input name="telefone" type="tel" placeholder="(00) 00000-0000" required /></label>
+            <label>E-mail<input name="email" type="email" /></label>
+            <label>Profissao<input name="profissao" type="text" /></label>
+            <label class="full">Endereco<input name="endereco" type="text" /></label>
+            <label class="full">Contato de emergencia<input name="emergencia" type="text" placeholder="Nome e telefone" /></label>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Historico de saude</h2>
+          <p>Marque condicoes existentes ou anteriores que possam interferir no atendimento estetico.</p>
+          <div class="checks">
+            <label class="check"><input name="saude" value="Gestante ou lactante" type="checkbox" />Gestante ou lactante</label>
+            <label class="check"><input name="saude" value="Hipertensao" type="checkbox" />Hipertensao</label>
+            <label class="check"><input name="saude" value="Diabetes" type="checkbox" />Diabetes</label>
+            <label class="check"><input name="saude" value="Doenca cardiaca" type="checkbox" />Doenca cardiaca</label>
+            <label class="check"><input name="saude" value="Epilepsia" type="checkbox" />Epilepsia</label>
+            <label class="check"><input name="saude" value="Cancer ou tratamento oncologico" type="checkbox" />Cancer ou tratamento oncologico</label>
+            <label class="check"><input name="saude" value="Trombose ou problemas circulatorios" type="checkbox" />Trombose ou problemas circulatorios</label>
+            <label class="check"><input name="saude" value="Alergias" type="checkbox" />Alergias</label>
+            <label class="check"><input name="saude" value="Queloide" type="checkbox" />Queloide</label>
+            <label class="check"><input name="saude" value="Herpes recorrente" type="checkbox" />Herpes recorrente</label>
+            <label class="check"><input name="saude" value="Alteracao hormonal" type="checkbox" />Alteracao hormonal</label>
+            <label class="check"><input name="saude" value="Marcapasso ou implante metalico" type="checkbox" />Marcapasso ou implante metalico</label>
+          </div>
+          <div class="grid" style="margin-top: 14px;">
+            <label>Medicamentos em uso<textarea name="medicamentos" placeholder="Nome, dose e frequencia"></textarea></label>
+            <label>Alergias conhecidas<textarea name="alergias" placeholder="Medicamentos, cosmeticos, latex, alimentos etc."></textarea></label>
+            <label>Cirurgias recentes<textarea name="cirurgias"></textarea></label>
+            <label>Observacoes de saude<textarea name="observacoes_saude"></textarea></label>
+          </div>
+        </section>
+
+        <section class="panel conditional" data-ficha="Facial" hidden>
+          <h2>Ficha de anamnese facial</h2>
+          <p>Dados para orientar protocolos faciais, cuidados de pele e procedimentos esteticos no rosto.</p>
+          <div class="grid three">
+            <label>Tipo de pele<select name="facial_tipo_pele"><option value="">Selecione</option><option>Normal</option><option>Seca</option><option>Oleosa</option><option>Mista</option><option>Sensivel</option><option>Acneica</option></select></label>
+            <label>Fototipo<select name="facial_fototipo"><option value="">Selecione</option><option>I - muito clara</option><option>II - clara</option><option>III - morena clara</option><option>IV - morena</option><option>V - morena escura</option><option>VI - negra</option></select></label>
+            <label>Sensibilidade<select name="facial_sensibilidade"><option value="">Selecione</option><option>Baixa</option><option>Moderada</option><option>Alta</option></select></label>
+          </div>
+          <div class="field-title" style="margin-top: 16px;">Queixas faciais principais</div>
+          <div class="checks three">
+            <label class="check"><input name="facial_queixas" value="Manchas" type="checkbox" />Manchas</label>
+            <label class="check"><input name="facial_queixas" value="Acne" type="checkbox" />Acne</label>
+            <label class="check"><input name="facial_queixas" value="Oleosidade" type="checkbox" />Oleosidade</label>
+            <label class="check"><input name="facial_queixas" value="Linhas finas" type="checkbox" />Linhas finas</label>
+            <label class="check"><input name="facial_queixas" value="Flacidez facial" type="checkbox" />Flacidez facial</label>
+            <label class="check"><input name="facial_queixas" value="Poros dilatados" type="checkbox" />Poros dilatados</label>
+            <label class="check"><input name="facial_queixas" value="Melasma" type="checkbox" />Melasma</label>
+            <label class="check"><input name="facial_queixas" value="Olheiras" type="checkbox" />Olheiras</label>
+            <label class="check"><input name="facial_queixas" value="Ressecamento" type="checkbox" />Ressecamento</label>
+          </div>
+          <div class="grid" style="margin-top: 14px;">
+            <label>Rotina de skincare<textarea name="facial_homecare" placeholder="Sabonete, hidratante, acidos, protetor solar etc."></textarea></label>
+            <label>Procedimentos faciais anteriores<textarea name="facial_procedimentos_anteriores"></textarea></label>
+            <label>Objetivo com o tratamento facial<textarea name="facial_objetivo"></textarea></label>
+            <label>Reacoes ou sensibilidades anteriores<textarea name="facial_reacoes"></textarea></label>
+          </div>
+          <div class="field-title" style="margin-top: 16px;">Procedimentos faciais de interesse</div>
+          <div class="checks three">
+            <label class="check"><input name="facial_procedimentos" value="Limpeza de pele" type="checkbox" />Limpeza de pele</label>
+            <label class="check"><input name="facial_procedimentos" value="Peeling" type="checkbox" />Peeling</label>
+            <label class="check"><input name="facial_procedimentos" value="Microagulhamento" type="checkbox" />Microagulhamento</label>
+            <label class="check"><input name="facial_procedimentos" value="Revitalizacao facial" type="checkbox" />Revitalizacao facial</label>
+            <label class="check"><input name="facial_procedimentos" value="Toxina botulinica" type="checkbox" />Toxina botulinica</label>
+            <label class="check"><input name="facial_procedimentos" value="Preenchimento facial" type="checkbox" />Preenchimento facial</label>
+            <label class="check"><input name="facial_procedimentos" value="Bioestimuladores" type="checkbox" />Bioestimuladores</label>
+            <label class="check"><input name="facial_procedimentos" value="Tratamento de melasma" type="checkbox" />Tratamento de melasma</label>
+            <label class="check"><input name="facial_procedimentos" value="Skinbooster" type="checkbox" />Skinbooster</label>
+          </div>
+        </section>
+
+        <section class="panel conditional" data-ficha="Corporal" hidden>
+          <h2>Ficha de anamnese corporal</h2>
+          <p>Dados para orientar protocolos corporais, drenagem, modeladora, laser, pos-operatorio e acompanhamento de medidas.</p>
+          <div class="grid three">
+            <label>Peso atual<input name="corporal_peso" type="text" placeholder="Ex.: 68 kg" /></label>
+            <label>Altura<input name="corporal_altura" type="text" placeholder="Ex.: 1,65 m" /></label>
+            <label>Objetivo principal<select name="corporal_objetivo_principal"><option value="">Selecione</option><option>Reducao de medidas</option><option>Gordura localizada</option><option>Celulite</option><option>Flacidez</option><option>Retencao de liquido</option><option>Pos-operatorio</option><option>Bem-estar</option></select></label>
+          </div>
+          <div class="field-title" style="margin-top: 16px;">Areas de tratamento</div>
+          <div class="checks three">
+            <label class="check"><input name="corporal_areas" value="Abdomen" type="checkbox" />Abdomen</label>
+            <label class="check"><input name="corporal_areas" value="Flancos" type="checkbox" />Flancos</label>
+            <label class="check"><input name="corporal_areas" value="Costas" type="checkbox" />Costas</label>
+            <label class="check"><input name="corporal_areas" value="Bracos" type="checkbox" />Bracos</label>
+            <label class="check"><input name="corporal_areas" value="Coxas" type="checkbox" />Coxas</label>
+            <label class="check"><input name="corporal_areas" value="Gluteos" type="checkbox" />Gluteos</label>
+            <label class="check"><input name="corporal_areas" value="Pernas" type="checkbox" />Pernas</label>
+            <label class="check"><input name="corporal_areas" value="Papada" type="checkbox" />Papada</label>
+            <label class="check"><input name="corporal_areas" value="Pos-operatorio" type="checkbox" />Pos-operatorio</label>
+          </div>
+          <div class="field-title" style="margin-top: 16px;">Queixas corporais</div>
+          <div class="checks three">
+            <label class="check"><input name="corporal_queixas" value="Celulite" type="checkbox" />Celulite</label>
+            <label class="check"><input name="corporal_queixas" value="Gordura localizada" type="checkbox" />Gordura localizada</label>
+            <label class="check"><input name="corporal_queixas" value="Retencao de liquido" type="checkbox" />Retencao de liquido</label>
+            <label class="check"><input name="corporal_queixas" value="Estrias" type="checkbox" />Estrias</label>
+            <label class="check"><input name="corporal_queixas" value="Flacidez" type="checkbox" />Flacidez</label>
+            <label class="check"><input name="corporal_queixas" value="Dor ou tensao muscular" type="checkbox" />Dor ou tensao muscular</label>
+          </div>
+          <div class="grid" style="margin-top: 14px;">
+            <label>Cirurgia recente ou prevista<textarea name="corporal_cirurgia" placeholder="Tipo de cirurgia, data, medico responsavel e liberacao para drenagem"></textarea></label>
+            <label>Historico de trombose, varizes ou alteracoes circulatorias<textarea name="corporal_circulatorio"></textarea></label>
+            <label>Procedimentos corporais anteriores<textarea name="corporal_procedimentos_anteriores"></textarea></label>
+            <label>Objetivo com o tratamento corporal<textarea name="corporal_objetivo"></textarea></label>
+          </div>
+          <div class="field-title" style="margin-top: 16px;">Procedimentos corporais de interesse</div>
+          <div class="checks three">
+            <label class="check"><input name="corporal_procedimentos" value="Drenagem linfatica" type="checkbox" />Drenagem linfatica</label>
+            <label class="check"><input name="corporal_procedimentos" value="Drenagem pos-operatoria" type="checkbox" />Drenagem pos-operatoria</label>
+            <label class="check"><input name="corporal_procedimentos" value="Massagem modeladora" type="checkbox" />Massagem modeladora</label>
+            <label class="check"><input name="corporal_procedimentos" value="Radiofrequencia corporal" type="checkbox" />Radiofrequencia corporal</label>
+            <label class="check"><input name="corporal_procedimentos" value="Criolipolise" type="checkbox" />Criolipolise</label>
+            <label class="check"><input name="corporal_procedimentos" value="Depilacao a laser" type="checkbox" />Depilacao a laser</label>
+            <label class="check"><input name="corporal_procedimentos" value="Protocolos para gordura localizada" type="checkbox" />Protocolos para gordura localizada</label>
+            <label class="check"><input name="corporal_procedimentos" value="Tratamento para celulite" type="checkbox" />Tratamento para celulite</label>
+            <label class="check"><input name="corporal_procedimentos" value="Relaxante" type="checkbox" />Relaxante</label>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Habitos e rotina</h2>
+          <p>Rotina da cliente para ajustar orientacoes e cuidados antes e depois dos procedimentos.</p>
+          <div class="grid three">
+            <label>Uso de protetor solar<select name="protetor"><option value="">Selecione</option><option>Diariamente</option><option>As vezes</option><option>Raramente</option><option>Nao usa</option></select></label>
+            <label>Exposicao ao sol<select name="sol"><option value="">Selecione</option><option>Baixa</option><option>Moderada</option><option>Alta</option></select></label>
+            <label>Ingestao de agua<select name="agua"><option value="">Selecione</option><option>Menos de 1 litro/dia</option><option>1 a 2 litros/dia</option><option>Mais de 2 litros/dia</option></select></label>
+            <label>Atividade fisica<select name="atividade"><option value="">Selecione</option><option>Nao pratica</option><option>1 a 2 vezes por semana</option><option>3 ou mais vezes por semana</option></select></label>
+            <label>Tabagismo<select name="tabagismo"><option value="">Selecione</option><option>Nao</option><option>Sim</option><option>Ex-fumante</option></select></label>
+            <label>Qualidade do sono<select name="sono"><option value="">Selecione</option><option>Boa</option><option>Regular</option><option>Ruim</option></select></label>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Conduta profissional</h2>
+          <p>Espaco para registro interno da avaliacao, protocolo indicado e orientacoes entregues a cliente.</p>
+          <div class="grid">
+            <label>Plano sugerido pela profissional<textarea name="plano" placeholder="Protocolos, numero de sessoes, intervalo e orientacoes"></textarea></label>
+            <label>Cuidados pre e pos-procedimento<textarea name="cuidados" placeholder="Orientacoes, restricoes, retorno e home care recomendado"></textarea></label>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Consentimento e LGPD</h2>
+          <p>Confirmacao da veracidade das informacoes e autorizacao para cadastro e acompanhamento.</p>
+          <div class="notice">
+            Declaro que as informacoes prestadas sao verdadeiras. Fui orientada(o) sobre objetivos, limites, possiveis desconfortos e cuidados pre e pos-procedimento. Autorizo o uso dos meus dados para cadastro, acompanhamento e registro de atendimento, conforme a LGPD.
+          </div>
+          <div class="checks" style="margin-top: 14px;">
+            <label class="check"><input name="consentimento" value="aceito" type="checkbox" required />Li e concordo com o termo acima.</label>
+            <label class="check"><input name="imagem" value="autorizo" type="checkbox" />Autorizo registro fotografico para acompanhamento da evolucao.</label>
+          </div>
+          <div class="signature">
+            <div><div class="signature-line"></div><strong>Assinatura da cliente</strong></div>
+            <label>Data<input name="data_atendimento" type="date" /></label>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="actions">
+            <button class="button primary" type="submit">Enviar ficha por e-mail</button>
+            <button class="button" type="button" id="copyButton">Copiar resumo</button>
+          </div>
+          <p class="status" id="status" role="status"></p>
+        </section>
+      </form>
+    </main>
+
+    <script>
+      const form = document.querySelector("#anamneseForm");
+      const statusEl = document.querySelector("#status");
+      const progressBar = document.querySelector("#progressBar");
+      const progressText = document.querySelector("#progressText");
+      const emailSubject = document.querySelector("#emailSubject");
+      const emailSummary = document.querySelector("#emailSummary");
+      const storageKey = "dreams-anamnese";
+      const conditionalSections = Array.from(document.querySelectorAll(".conditional"));
+
+      function getFields() {
+        return Array.from(form.elements).filter((field) => field.name && !field.disabled);
+      }
+
+      function getAllFields() {
+        return Array.from(form.elements).filter((field) => field.name);
+      }
+
+      function selectedFicha() {
+        return form.querySelector("input[name='tipo_ficha']:checked")?.value || "";
+      }
+
+      function applyFichaType() {
+        const type = selectedFicha();
+        conditionalSections.forEach((section) => {
+          const active = section.dataset.ficha === type;
+          section.hidden = !active;
+          section.querySelectorAll("input, select, textarea").forEach((field) => {
+            field.disabled = !active;
+          });
+        });
+        updateProgress();
+      }
+
+      function serializeForm() {
+        const data = {};
+        getFields().forEach((field) => {
+          if (field.type === "checkbox") {
+            if (!data[field.name]) data[field.name] = [];
+            if (field.checked) data[field.name].push(field.value);
+          } else {
+            data[field.name] = field.value;
+          }
+        });
+        return data;
+      }
+
+      function restoreForm(data) {
+        getAllFields().forEach((field) => {
+          if (field.type === "checkbox") {
+            field.checked = Array.isArray(data[field.name]) && data[field.name].includes(field.value);
+          } else if (field.type === "radio") {
+            field.checked = data[field.name] === field.value;
+          } else {
+            field.value = data[field.name] || "";
+          }
+        });
+        applyFichaType();
+      }
+
+      function updateProgress() {
+        const required = getFields().filter((field) => field.required);
+        const filled = required.filter((field) => field.type === "checkbox" ? field.checked : field.value.trim() !== "").length;
+        const percent = required.length ? Math.round((filled / required.length) * 100) : 0;
+        progressBar.style.width = percent + "%";
+        progressText.textContent = percent + "%";
+      }
+
+      function list(value) {
+        return Array.isArray(value) && value.length ? value.join(", ") : "Nao informado";
+      }
+
+      function buildSummary() {
+        const data = serializeForm();
+        const summary = [
+          "FICHA DE ANAMNESE - DREAMS",
+          "Tipo de ficha: " + (data.tipo_ficha || "Nao informado"),
+          "",
+          "Nome: " + (data.nome || "Nao informado"),
+          "Nascimento: " + (data.nascimento || "Nao informado"),
+          "Telefone: " + (data.telefone || "Nao informado"),
+          "Email: " + (data.email || "Nao informado"),
+          "",
+          "Historico de saude: " + list(data.saude),
+          "Medicamentos: " + (data.medicamentos || "Nao informado"),
+          "Alergias: " + (data.alergias || "Nao informado"),
+          ""
+        ];
+
+        if (data.tipo_ficha === "Facial") {
+          summary.push(
+            "DADOS FACIAIS",
+            "Tipo de pele: " + (data.facial_tipo_pele || "Nao informado"),
+            "Fototipo: " + (data.facial_fototipo || "Nao informado"),
+            "Sensibilidade: " + (data.facial_sensibilidade || "Nao informado"),
+            "Queixas faciais: " + list(data.facial_queixas),
+            "Rotina de skincare: " + (data.facial_homecare || "Nao informado"),
+            "Procedimentos anteriores: " + (data.facial_procedimentos_anteriores || "Nao informado"),
+            "Objetivo facial: " + (data.facial_objetivo || "Nao informado"),
+            "Reacoes anteriores: " + (data.facial_reacoes || "Nao informado"),
+            "Procedimentos faciais: " + list(data.facial_procedimentos),
+            ""
+          );
+        }
+
+        if (data.tipo_ficha === "Corporal") {
+          summary.push(
+            "DADOS CORPORAIS",
+            "Peso: " + (data.corporal_peso || "Nao informado"),
+            "Altura: " + (data.corporal_altura || "Nao informado"),
+            "Objetivo principal: " + (data.corporal_objetivo_principal || "Nao informado"),
+            "Areas de tratamento: " + list(data.corporal_areas),
+            "Queixas corporais: " + list(data.corporal_queixas),
+            "Cirurgia recente/prevista: " + (data.corporal_cirurgia || "Nao informado"),
+            "Historico circulatorio: " + (data.corporal_circulatorio || "Nao informado"),
+            "Procedimentos anteriores: " + (data.corporal_procedimentos_anteriores || "Nao informado"),
+            "Objetivo corporal: " + (data.corporal_objetivo || "Nao informado"),
+            "Procedimentos corporais: " + list(data.corporal_procedimentos),
+            ""
+          );
+        }
+
+        summary.push(
+          "Plano sugerido: " + (data.plano || "Nao informado"),
+          "Cuidados: " + (data.cuidados || "Nao informado"),
+          "",
+          "Consentimento: " + list(data.consentimento),
+          "Autorizacao de imagem: " + list(data.imagem),
+          "Data: " + (data.data_atendimento || "Nao informado")
+        );
+        return summary.join("\n");
+      }
+
+      function setStatus(message) {
+        statusEl.textContent = message;
+        window.setTimeout(() => {
+          if (statusEl.textContent === message) statusEl.textContent = "";
+        }, 3500);
+      }
+
+      function prepareEmailFields() {
+        const data = serializeForm();
+        emailSubject.value = "Ficha de anamnese Dreams - " + (data.tipo_ficha || "Sem tipo") + " - " + (data.nome || "Cliente");
+        emailSummary.value = buildSummary();
+      }
+
+      form.addEventListener("input", () => {
+        applyFichaType();
+      });
+      form.addEventListener("submit", (event) => {
+        if (!form.reportValidity()) {
+          event.preventDefault();
+          return;
+        }
+        localStorage.setItem(storageKey, JSON.stringify(serializeForm()));
+        prepareEmailFields();
+        setStatus("Enviando ficha para atendimento@centroavancadodreams.com.br.");
+      });
+
+      document.querySelector("#saveButton").addEventListener("click", () => {
+        localStorage.setItem(storageKey, JSON.stringify(serializeForm()));
+        setStatus("Preenchimento salvo neste navegador.");
+      });
+      document.querySelector("#printButton").addEventListener("click", () => window.print());
+      document.querySelector("#clearButton").addEventListener("click", () => {
+        if (!confirm("Deseja limpar todos os campos da ficha?")) return;
+        form.reset();
+        localStorage.removeItem(storageKey);
+        applyFichaType();
+        setStatus("Ficha limpa.");
+      });
+      document.querySelector("#copyButton").addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(buildSummary());
+          setStatus("Resumo copiado.");
+        } catch (error) {
+          setStatus("Nao foi possivel copiar automaticamente. Use imprimir/PDF.");
+        }
+      });
+
+      const saved = localStorage.getItem(storageKey);
+      if (saved) {
+        try { restoreForm(JSON.parse(saved)); } catch (error) { updateProgress(); }
+      } else {
+        applyFichaType();
+      }
+    </script>
+  </body>
+</html>
